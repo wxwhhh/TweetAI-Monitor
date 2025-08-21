@@ -153,3 +153,4 @@ twitter-ai-monitor/
 - [源项目](https://github.com/luoyongkai/AI-News)) - AI-News
   
 ⭐ 如果这个项目对您有帮助，请给我们一个星标！ 
+<img width="562" height="210" alt="Snipaste_2025-08-13_11-10-04" src="https://github.com/user-attachments/assets/d0b5bace-c4e3-4e13-af3c-8f8117cd896c" />
