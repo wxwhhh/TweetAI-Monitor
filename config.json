@@ -1,0 +1,14 @@
+{
+  "TWITTER_API_KEY": "",
+  "LLM_URL": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "LLM_API_KEY": "",
+  "TARGET_ACCOUNTS": [
+    "blackmoon_group",
+    "USA_China_Talk"
+  ],
+  "CHECK_INTERVAL": 3000,
+  "INITIAL_HOURS": 12,
+  "ENABLE_DINGTALK": true,
+  "DINGTALK_WEBHOOK": "",
+  "DINGTALK_SECRET": ""
+}

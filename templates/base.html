@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Twitter(X) AI 监控系统 - 实时AI动态{% endblock %}</title>
+    <!-- 使用本地文件 -->
+    <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/bootstrap-icons/font/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="bi bi-lightning-charge"></i> Twitter(X) AI 监控系统
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">
+                            <i class="bi bi-house"></i> 首页
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}" href="{{ url_for('settings') }}">
+                            <i class="bi bi-gear"></i> 设置
+                        </a>
+                    </li>
+                </ul>
+                <div class="navbar-text d-flex align-items-center">
+                    <!-- 主题切换按钮 -->
+                    <button id="theme-toggle" class="btn btn-outline-light btn-sm me-3" title="切换主题">
+                        <i class="bi bi-sun-fill" id="theme-icon"></i>
+                    </button>
+                    
+                    <span id="monitoring-status" class="badge {% if monitoring_status.running %}bg-success{% else %}bg-danger{% endif %}">
+                        {% if monitoring_status.running %}
+                            <i class="bi bi-cpu"></i> AI ACTIVE
+                        {% else %}
+                            <i class="bi bi-power"></i> OFFLINE
+                        {% endif %}
+                    </span>
+                    {% if monitoring_status.last_update %}
+                        <small class="ms-2">最后更新: {{ monitoring_status.last_update[:19].replace('T', ' ') }}</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mt-5 py-4">
+        <div class="container text-center">
+            <p class="text-muted">&copy; 2024 Twitter(X) AI 监控系统. Powered by Neural Intelligence & Advanced Analytics</p>
+        </div>
+    </footer>
+
+    <!-- 使用本地文件 -->
+    <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

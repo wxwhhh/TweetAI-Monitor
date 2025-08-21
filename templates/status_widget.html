@@ -1,0 +1,128 @@
+<!-- 实时状态显示组件 -->
+<div class="neural-status-widget data-stream">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="mb-0 neon-glow" style="color: #00d4ff;">
+                <i class="bi bi-activity"></i> Neural Activity Monitor
+            </h6>
+        </div>
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="status-item mb-2">
+                        <small class="text-muted">系统状态</small>
+                        <div id="widget-status" class="fw-bold text-light">初始化中...</div>
+                    </div>
+                    <div class="status-item mb-2">
+                        <small class="text-muted">当前任务</small>
+                        <div id="widget-task" class="fw-bold text-primary">等待指令</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="status-item mb-2">
+                        <small class="text-muted">处理总数</small>
+                        <div id="widget-count" class="fw-bold text-success">0 条推文</div>
+                    </div>
+                    <div class="status-item mb-2">
+                        <small class="text-muted">最新结果</small>
+                        <div id="widget-result" class="fw-bold text-info">暂无</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 进度条 -->
+            <div class="progress mt-3" style="height: 6px;">
+                <div id="activity-progress" class="progress-bar bg-gradient" style="width: 0%; background: linear-gradient(90deg, #667eea, #764ba2);"></div>
+            </div>
+            
+            <!-- 下次检查倒计时 -->
+            <div id="countdown-container" class="mt-2 text-center" style="display: none;">
+                <small class="text-muted">
+                    <i class="bi bi-clock"></i> 下次扫描: <span id="countdown-timer" class="text-primary">00:00</span>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 状态组件更新函数
+function updateStatusWidget(data) {
+    const statusEl = document.getElementById('widget-status');
+    const taskEl = document.getElementById('widget-task');
+    const countEl = document.getElementById('widget-count');
+    const resultEl = document.getElementById('widget-result');
+    const progressEl = document.getElementById('activity-progress');
+    
+    if (statusEl) {
+        statusEl.textContent = data.running ? 'Neural Network Active' : 'Offline';
+        statusEl.className = data.running ? 'fw-bold text-success' : 'fw-bold text-danger';
+    }
+    
+    if (taskEl) {
+        taskEl.textContent = data.current_status || '待机中';
+    }
+    
+    if (countEl) {
+        countEl.textContent = `${data.processed_tweets || 0} 条推文`;
+    }
+    
+    if (resultEl) {
+        resultEl.textContent = data.last_result || '暂无';
+    }
+    
+    // 更新进度条
+    if (progressEl) {
+        const progress = data.running ? (data.current_status?.includes('处理中') ? 75 : 
+                                       data.current_status?.includes('扫描') ? 50 : 
+                                       data.current_status?.includes('待机') ? 25 : 100) : 0;
+        progressEl.style.width = progress + '%';
+    }
+    
+    // 更新倒计时
+    updateCountdown(data.beijing_next_check_time || data.next_check_time);
+}
+
+// 倒计时功能
+function updateCountdown(nextCheckTime) {
+    const countdownContainer = document.getElementById('countdown-container');
+    const countdownTimer = document.getElementById('countdown-timer');
+    
+    if (!nextCheckTime) {
+        if (countdownContainer) countdownContainer.style.display = 'none';
+        return;
+    }
+    
+    const nextCheck = new Date(nextCheckTime);
+    const now = new Date();
+    const diff = nextCheck - now;
+    
+    if (diff > 0 && countdownContainer) {
+        countdownContainer.style.display = 'block';
+        const minutes = Math.floor(diff / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+        
+        if (countdownTimer) {
+            countdownTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    } else if (countdownContainer) {
+        countdownContainer.style.display = 'none';
+    }
+}
+
+// 定期更新状态组件
+setInterval(() => {
+    fetch('/api/monitoring_status')
+        .then(response => response.json())
+        .then(data => updateStatusWidget(data))
+        .catch(error => console.error('状态组件更新失败:', error));
+}, 2000);
+
+// 页面加载时立即更新
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/monitoring_status')
+        .then(response => response.json())
+        .then(data => updateStatusWidget(data))
+        .catch(error => console.error('状态组件初始化失败:', error));
+});
+</script> 
