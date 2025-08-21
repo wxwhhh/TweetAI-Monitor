@@ -149,7 +149,7 @@ twitter-ai-monitor/
 - Web管理界面
 
 ## 🙏 致谢
-
-- [轮子源项目](https://github.com/luoyongkai/AI-News)) - AI-News
+使用AI-News进行二开造轮子 感谢！
+- [源项目](https://github.com/luoyongkai/AI-News)) - AI-News
   
 ⭐ 如果这个项目对您有帮助，请给我们一个星标！ 
