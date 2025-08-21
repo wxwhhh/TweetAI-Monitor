@@ -32,19 +32,38 @@ cd twitter-ai-monitor
 
 2. **安装依赖**
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
-3. **配置参数**
-在设置中填入所需要的api_key等信息，保存后配置。
-
-4. **启动系统**
+3. **启动系统**
 ```bash
-python start.py
+python3 start.py
 ```
+<img width="1707" height="779" alt="image" src="https://github.com/user-attachments/assets/94fc4672-8699-4e85-88c1-3d28b18ecfe4" />
 
-5. **访问Web界面**
+4. **访问Web界面**
 打开浏览器访问 `http://localhost:5000`
+
+5. **配置参数**
+在设置中填入所需要的api_key等信息，保存后配置。
+<img width="1973" height="740" alt="image" src="https://github.com/user-attachments/assets/12a782b4-916e-4979-a995-6cfea57b5d55" />
+<img width="1287" height="462" alt="image" src="https://github.com/user-attachments/assets/53926418-f6ec-4dbd-8182-4d51cb374673" />
+
+6. **配置监控用户**
+在监控账号这里写要监测账号的名字，例如特朗普和特朗普中文推特
+<img width="762" height="100" alt="image" src="https://github.com/user-attachments/assets/459b3b00-d476-41e4-b64d-066212326093" />
+<img width="942" height="134" alt="image" src="https://github.com/user-attachments/assets/be0f2a95-3f22-4670-9557-57fef4055444" />
+配置如下，使用逗号隔开(英文逗号)
+<img width="1288" height="418" alt="image" src="https://github.com/user-attachments/assets/02dbba64-afad-451b-82a0-2fbd256e1cfa" />
+
+7. **开启监控**
+一切配置好之后进行开启监控，内容就会进行实时更新
+<img width="2000" height="399" alt="image" src="https://github.com/user-attachments/assets/595789e9-251a-493a-add2-4c63399be262" />
+
+7. **页面和钉钉显示通知显示如下**
+<img width="1972" height="1093" alt="image" src="https://github.com/user-attachments/assets/ee070275-11c4-426c-896c-51270127ef6e" />
+<img width="890" height="468" alt="image" src="https://github.com/user-attachments/assets/9a8346c9-e52b-4d74-865f-f3ad4ef5015d" />
+
 
 ## 📋 配置说明
 
@@ -65,8 +84,8 @@ python start.py
 ## 🎯 使用场景
 
 - **AI研究者**: 监控OpenAI、Google、Meta等AI公司的官方动态
-- **技术博主**: 获取最新AI技术资讯，生成中文内容
-- **投资分析**: 跟踪AI行业重要新闻和产品发布
+- **技术博主**: 获取最新技术资讯，生成中文内容
+- **投资分析**: 跟踪重要新闻和产品发布
 - **内容创作**: 自动翻译和摘要，提高内容创作效率
 
 ## 🏗️ 系统架构
@@ -113,11 +132,6 @@ twitter-ai-monitor/
 ### 调整检查间隔
 修改监控检查频率，平衡实时性和API使用量
 
-### AI处理参数
-- 最大重试次数
-- 超时时间
-- Token数量限制
-
 ## 📊 监控效果
 
 系统会自动：
@@ -127,16 +141,6 @@ twitter-ai-monitor/
 4. 推送到钉钉群
 5. 存储到本地数据库
 
-## 🤝 贡献指南
-
-欢迎提交Issue和Pull Request！
-
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
-
 ## 📝 更新日志
 
 ### v1.0.0
@@ -145,16 +149,8 @@ twitter-ai-monitor/
 - 钉钉机器人推送
 - Web管理界面
 
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
-
 ## 🙏 致谢
 
-- [TwitterAPI.io](https://twitterapi.io/) - 提供Twitter数据访问
-- [Flask](https://flask.palletsprojects.com/) - Web框架
-- [OpenAI](https://openai.com/) - AI模型接口标准
-
----
-
+- [轮子源项目](https://github.com/luoyongkai/AI-News)) - AI-News
+  
 ⭐ 如果这个项目对您有帮助，请给我们一个星标！ 
