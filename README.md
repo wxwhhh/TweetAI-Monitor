@@ -61,9 +61,8 @@ python3 start.py
 <img width="2000" height="399" alt="image" src="https://github.com/user-attachments/assets/595789e9-251a-493a-add2-4c63399be262" />
 
 7. **页面和钉钉显示通知显示如下**
-<img width="1972" height="1093" alt="image" src="https://github.com/user-attachments/assets/ee070275-11c4-426c-896c-51270127ef6e" />
-<img width="890" height="468" alt="image" src="https://github.com/user-attachments/assets/9a8346c9-e52b-4d74-865f-f3ad4ef5015d" />
-
+<img width="1859" height="1031" alt="image" src="https://github.com/user-attachments/assets/dd16eae7-0af3-45e9-b359-215d5d2c19c5" />
+<img width="1740" height="565" alt="image" src="https://github.com/user-attachments/assets/97599969-e2f5-48e6-af0f-0fef4847becd" />
 
 ## 📋 配置说明
 
