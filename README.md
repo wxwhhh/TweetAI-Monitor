@@ -42,13 +42,15 @@ python3 start.py
 
 4. **登录系统**
 - 系统首次启动时会自动创建默认账号
-- 默认用户名: `admin`
+- 默认用户名: `admin` 密码`xxxxx` 
 - 默认密码会显示在控制台中，并保存到 `data/default_password.txt` 文件
+
+<img width="1617" height="378" alt="image" src="https://github.com/user-attachments/assets/8c6d3ee3-47d7-4c04-bcf5-7eb5c774bc36" />
 - 访问 `http://localhost:5000` 进行登录
 <img width="1707" height="779" alt="image" src="https://github.com/user-attachments/assets/94fc4672-8699-4e85-88c1-3d28b18ecfe4" />
 
 4. **访问Web界面**
-打开浏览器访问 `http://localhost:5000`
+打开浏览器访问 `http://服务器的IP地址:5000`
 
 5. **配置参数**
 在设置中填入所需要的api_key等信息，保存后配置。
@@ -175,6 +177,9 @@ python manage_users.py delete user1
 5. 存储到本地数据库
 
 ## 📝 更新日志
+
+### v1.2.0
+- 重点添加了登录页面，可方便部署到外网
 
 ### v1.0.0
 - 基础监控功能
