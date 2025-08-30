@@ -46,29 +46,30 @@ python3 start.py
 - 默认密码会显示在控制台中，并保存到 `data/default_password.txt` 文件
 
 <img width="1617" height="378" alt="image" src="https://github.com/user-attachments/assets/8c6d3ee3-47d7-4c04-bcf5-7eb5c774bc36" />
-- 访问 `http://localhost:5000` 进行登录
-<img width="1707" height="779" alt="image" src="https://github.com/user-attachments/assets/94fc4672-8699-4e85-88c1-3d28b18ecfe4" />
 
-4. **访问Web界面**
+5. **访问Web界面**
 打开浏览器访问 `http://服务器的IP地址:5000`
 
-5. **配置参数**
+<img width="2505" height="1097" alt="image" src="https://github.com/user-attachments/assets/456b79a3-5d4f-42c8-a996-2c522b44cfc4" />
+
+
+6. **配置参数**
 在设置中填入所需要的api_key等信息，保存后配置。
 <img width="1973" height="740" alt="image" src="https://github.com/user-attachments/assets/12a782b4-916e-4979-a995-6cfea57b5d55" />
 <img width="1287" height="462" alt="image" src="https://github.com/user-attachments/assets/53926418-f6ec-4dbd-8182-4d51cb374673" />
 
-6. **配置监控用户**
+7. **配置监控用户**
 在监控账号这里写要监测账号的名字，例如特朗普和特朗普中文推特
 <img width="762" height="100" alt="image" src="https://github.com/user-attachments/assets/459b3b00-d476-41e4-b64d-066212326093" />
 <img width="942" height="134" alt="image" src="https://github.com/user-attachments/assets/be0f2a95-3f22-4670-9557-57fef4055444" />
 配置如下，使用逗号隔开(英文逗号)
 <img width="1288" height="418" alt="image" src="https://github.com/user-attachments/assets/02dbba64-afad-451b-82a0-2fbd256e1cfa" />
 
-7. **开启监控**
+8. **开启监控**
 一切配置好之后进行开启监控，内容就会进行实时更新
 <img width="2000" height="399" alt="image" src="https://github.com/user-attachments/assets/595789e9-251a-493a-add2-4c63399be262" />
 
-7. **页面和钉钉显示通知显示如下**
+9. **页面和钉钉显示通知显示如下**
 <img width="1859" height="1031" alt="image" src="https://github.com/user-attachments/assets/dd16eae7-0af3-45e9-b359-215d5d2c19c5" />
 <img width="1740" height="565" alt="image" src="https://github.com/user-attachments/assets/97599969-e2f5-48e6-af0f-0fef4847becd" />
 
