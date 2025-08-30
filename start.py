@@ -14,6 +14,7 @@ def check_dependencies():
         import flask
         import requests
         import openai
+        import sqlite3
         print("✓ 所有依赖包已安装")
         return True
     except ImportError as e:
@@ -44,6 +45,8 @@ def main():
     # 启动Flask应用
     print("\n启动Flask应用...")
     print("访问地址: http://localhost:5000")
+    print("🔐 认证系统已启用，首次访问需要登录")
+    print("📝 默认账号密码将显示在控制台中")
     print("按 Ctrl+C 停止服务\n")
     
     try:

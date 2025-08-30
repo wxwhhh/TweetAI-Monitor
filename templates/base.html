@@ -48,6 +48,16 @@
                     {% if monitoring_status.last_update %}
                         <small class="ms-2">最后更新: {{ monitoring_status.last_update[:19].replace('T', ' ') }}</small>
                     {% endif %}
+                    
+                    <!-- 用户信息和退出按钮 -->
+                    <div class="ms-3 d-flex align-items-center">
+                        <span class="text-light me-2">
+                            <i class="bi bi-person-circle"></i> 已登录
+                        </span>
+                        <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm" title="退出登录">
+                            <i class="bi bi-box-arrow-right"></i> 退出
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

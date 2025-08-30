@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 import json
 import os
 from datetime import datetime, timedelta
@@ -10,9 +10,10 @@ import base64
 import urllib.parse
 import requests
 from twitter_ai_monitor import TwitterAIMonitor
+from auth import auth_manager, login_required, get_current_user_id
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key'
+app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
 
 # 全局变量
 monitor_instance = None
@@ -266,7 +267,44 @@ def stop_monitoring():
     
     return True, "🛑 Neural Network Deactivated"
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """登录页面"""
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if not username or not password:
+            flash('请输入用户名和密码', 'error')
+            return render_template('login.html')
+        
+        user_id = auth_manager.verify_user(username, password)
+        if user_id:
+            # 创建session
+            session_id = auth_manager.create_session(user_id)
+            session['session_id'] = session_id
+            
+            flash('登录成功！', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('用户名或密码错误', 'error')
+            return render_template('login.html')
+    
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    """退出登录"""
+    session_id = session.get('session_id')
+    if session_id:
+        auth_manager.delete_session(session_id)
+        session.pop('session_id', None)
+    
+    flash('已退出登录', 'success')
+    return redirect(url_for('login'))
+
 @app.route('/')
+@login_required
 def index():
     """首页"""
     # 获取筛选参数
@@ -325,6 +363,7 @@ def index():
                          monitoring_status=monitoring_status)
 
 @app.route('/tweet/<tweet_id>')
+@login_required
 def tweet_detail(tweet_id):
     """推文详情页"""
     # 获取所有推文数据
@@ -353,12 +392,14 @@ def tweet_detail(tweet_id):
     return render_template('tweet_detail.html', tweet=tweet, monitoring_status=monitoring_status)
 
 @app.route('/settings')
+@login_required
 def settings():
     """个人中心/设置页面"""
     config = load_config()
     return render_template('settings.html', config=config, monitoring_status=monitoring_status)
 
 @app.route('/api/save_config', methods=['POST'])
+@login_required
 def save_config_api():
     """保存配置API"""
     try:
@@ -405,23 +446,27 @@ def save_config_api():
         return jsonify({"success": False, "message": f"⚠️ Configuration sync failed: {str(e)}"})
 
 @app.route('/api/start_monitoring', methods=['POST'])
+@login_required
 def start_monitoring_api():
     """启动监控API"""
     success, message = start_monitoring()
     return jsonify({"success": success, "message": message})
 
 @app.route('/api/stop_monitoring', methods=['POST'])
+@login_required
 def stop_monitoring_api():
     """停止监控API"""
     success, message = stop_monitoring()
     return jsonify({"success": success, "message": message})
 
 @app.route('/api/monitoring_status')
+@login_required
 def monitoring_status_api():
     """获取监控状态API"""
     return jsonify(monitoring_status)
 
 @app.route('/api/tweets')
+@login_required
 def tweets_api():
     """推文数据API"""
     author_filter = request.args.get('author', '')
@@ -466,6 +511,7 @@ def tweets_api():
     })
 
 @app.route('/api/test_dingtalk', methods=['POST'])
+@login_required
 def test_dingtalk_api():
     """测试钉钉推送API"""
     try:
@@ -498,11 +544,28 @@ def test_dingtalk_api():
     except Exception as e:
         return jsonify({"success": False, "message": f"❌ 测试失败: {str(e)}"})
 
+def cleanup_sessions():
+    """定期清理过期的session"""
+    while True:
+        try:
+            auth_manager.cleanup_expired_sessions()
+            time.sleep(3600)  # 每小时清理一次
+        except Exception as e:
+            print(f"清理session时出错: {e}")
+            time.sleep(3600)
+
 if __name__ == '__main__':
     # 确保必要的目录存在
     os.makedirs('data', exist_ok=True)
-    os.makedirs('templates', exist_ok=True)
     os.makedirs('static/css', exist_ok=True)
     os.makedirs('static/js', exist_ok=True)
+    
+    # 启动session清理线程
+    cleanup_thread = threading.Thread(target=cleanup_sessions, daemon=True)
+    cleanup_thread.start()
+    
+    print("🚀 启动Twitter AI监控系统...")
+    print("🔐 认证系统已启用，默认用户将在首次启动时自动创建")
+    print("📝 默认密码将保存到 data/default_password.txt 文件中")
     
     app.run(debug=True, host='0.0.0.0', port=5000) 
